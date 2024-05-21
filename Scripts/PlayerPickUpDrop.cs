@@ -19,7 +19,7 @@ public class PlayerPickUpDrop : MonoBehaviour
 
     public ObjectGrabbable objectGrabbable;
 
-    private bool easyMode; //if user has chosen easy mode
+    private bool supportedMode; 
 
     //Two objects to be selected
     private GameObject selectedPickUpObject; //can only be grabbable
@@ -45,7 +45,7 @@ public class PlayerPickUpDrop : MonoBehaviour
 
     void Start(){
         runManager   = FindObjectOfType<RunManager>(); 
-        easyMode     = runManager.isEasyMode(); 
+        supportedMode     = runManager.isSupportedMode(); 
         interactable = GameObject.FindGameObjectsWithTag("Interactable"); //get items with "interactable" tag
         pickupable   = GameObject.FindGameObjectsWithTag("Pickupable"); //get items with "pickupable" tag 
         raycastAble  = pickupable.Concat(interactable).ToArray(); //merge
@@ -70,7 +70,7 @@ public class PlayerPickUpDrop : MonoBehaviour
             return;
         }
 
-        if (easyMode){
+        if (supportedMode){
             if (latestHitObject != null && selectedPickUpObject != null && targetObject == null) { // Player holds object
                 if (latestHitObject != selectedPickUpObject){ //Drop the selected object upon hit object if not same object
                     DropGrabbedObject();
@@ -85,7 +85,7 @@ public class PlayerPickUpDrop : MonoBehaviour
                 }
             }
             
-        } else { //not easy mode
+        } else { //not supported mode
             if (objectGrabbable != null) {
                 DropGrabbedObject(); 
                 return;
@@ -113,7 +113,7 @@ public class PlayerPickUpDrop : MonoBehaviour
 
     private void DropGrabbedObject(){
         print("[INTERACTION] drop time: " + DateTime.Now.ToString("HH:mm:ss:fff"));
-        if (easyMode){
+        if (supportedMode){
             targetObject = latestHitObject;
             objectGrabbable.DropEasyMode(); 
         } else {
@@ -127,7 +127,7 @@ public class PlayerPickUpDrop : MonoBehaviour
         eventManager = FindObjectOfType<EventManager>(); 
         runManager = FindObjectOfType<RunManager>();
         if (!runManager.getIntroductionMode()){
-            if (easyMode){
+            if (supportedMode){
                 MoveObject(); 
             }
             client.PostRequest("http://127.0.0.1:5000/api/v1/evaluation", eventManager.OnEvaluationRecieved, null, null, false); 

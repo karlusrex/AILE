@@ -94,7 +94,7 @@ public class ObjectGrabbable : MonoBehaviour
         //Check if medium mode is activated 
         RunManager runManager = FindObjectOfType<RunManager>(); 
 
-        if (runManager.isMediumMode()){
+        if (runManager.isSemiManualMode()){
             GameObject closestObject = GetClosestObject();
 
             Debug.Log(closestObject); 

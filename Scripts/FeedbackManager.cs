@@ -48,7 +48,7 @@ public class FeedbackManager: MonoBehaviour{
         feedbackCounter = 0.0f;
         client = FindObjectOfType<Client>(); 
 
-        if (runManager.isEasyMode()){
+        if (runManager.isSupportedMode()){
             max = 1.5; 
         } else {
             max = 3.0; 

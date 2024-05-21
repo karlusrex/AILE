@@ -11,9 +11,9 @@ public class RunManager : MonoBehaviour
     public bool enableContinuousInstructions = false; 
     public bool introductionMode = true;
     private Client client;
-    public bool easyMode; //supported mode
-    public bool mediumMode; //semi-manual mode
-    public bool hardMode; //manual mode
+    public bool supportedMode; 
+    public bool semiManualMode; 
+    public bool manualMode; 
     public bool isCubeScene; 
 
     public UnityEvent<string> IntroductionIsOver = new UnityEvent<string>();
@@ -47,16 +47,16 @@ public class RunManager : MonoBehaviour
     
     }
 
-    public bool isEasyMode(){
-        return easyMode; 
+    public bool isSupportedMode(){
+        return supportedMode; 
     }
 
-    public bool isMediumMode(){
-        return mediumMode; 
+    public bool isSemiManualMode(){
+        return semiManualMode; 
     }
 
-    public bool isHardMode() {
-        return hardMode;
+    public bool isManualMode() {
+        return manualMode;
     }
 
     public bool getEnablePictogram(){
