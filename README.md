@@ -59,6 +59,15 @@ The system current provides the following functionalities:
 
 The Client section is how Unity communicates with the Python Flask Server, which in turn communicates with ChatGPT API.
 
+![image](https://github.com/karlusrex/AILE/assets/90254802/baaf5a9b-1e32-4bb4-9153-3ae4a030a5f0)
+
+## Example 
+
+An example of how pictogram from Cboard is displayed, when the user is supposed to put the water melon in the bowl.
+
+![image](https://github.com/karlusrex/AILE/assets/90254802/f1e14d4e-f8d5-450d-9bf7-c721722377d7)
+
+
 # Credits
 
 This section is to give credit to code copied, modified, or drawn inspiration from various sources.
