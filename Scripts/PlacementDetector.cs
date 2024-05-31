@@ -13,8 +13,7 @@ public class PlacementDetector : MonoBehaviour
     private GameObject inside; 
     private float rayLength = 0.20f; 
     bool onTheSide = false;
-    // hashmap storing number and objects
-    private Dictionary<int, GameObject> sideToObject = new Dictionary<int, GameObject>();
+    private Dictionary<int, GameObject> sideToObject = new Dictionary<int, GameObject>();  // hashmap storing number and objects
 
     public void VerticalRaycast(Vector3 transformStartPosition, Vector3 transformDirectionVector, float transformationAngle) {
         {
@@ -143,8 +142,6 @@ public class PlacementDetector : MonoBehaviour
 
             // clear dictionary
             sideToObject.Clear();
-
-            // wait for 0.1 seconds
             yield return new WaitForSeconds(.1f);
         }
     }
@@ -153,12 +150,4 @@ public class PlacementDetector : MonoBehaviour
         StartCoroutine(GetObjectRelations(callback));
     }
 
-    private void OnTriggerStay(Collider other){
-        //called as long as collider and trigger collider overlap
-        inside = other.gameObject; 
-    }
-
-    private void OnTriggerExit(Collider other){
-        inside =  null; 
-    }
 }

@@ -34,7 +34,7 @@ public class Callback : MonoBehaviour {
     public void OnLastEvaluationRecieved(string response) { 
 
         if (response == "true"){
-            audioPlayback.OnInstructionsRecieved("Congratulations, you have completed the task."); // kanske kan återanvända denna metod
+            audioPlayback.OnInstructionsRecieved("Congratulations, you have completed the task."); 
         } else {
             client.Reset(); //Replay instructions from beginning
         }

@@ -136,8 +136,6 @@ public class AudioPlayback : MonoBehaviour
     {
         if (response != null)
         {
-            //response = Regex.Replace(response.Trim(), @"[^a-zA-Z\s]", ""); 
-            Debug.Log("[AUDIO] Instructions Receieved to play: " + response);
             content = response; 
             client.PostRequest(uriTTS, null, OnTextToSpeechRecieved, response, true);
         } else

@@ -112,7 +112,7 @@ public class Microph : MonoBehaviour {
     /*
     Gets the current audio level as a float 
     */
-    float MicrophoneAudioLevel() // TODO: GIVE CREDIT TO ORIGINAL AUTHOR
+    float MicrophoneAudioLevel() 
     {
         float levelMax = 0;
         float[] waveData = new float[_sampleWindow];

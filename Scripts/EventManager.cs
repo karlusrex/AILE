@@ -7,7 +7,6 @@ using UnityEngine.Events;
 public class EventManager : MonoBehaviour {
     private Timer timer; 
     private Microph mic; 
-    // private ObjectGrabbable objectGrabbable; 
     private Client client; 
     private AudioPlayback audioPlayback; 
     private RunManager runManager;
@@ -38,7 +37,6 @@ public class EventManager : MonoBehaviour {
     void Start(){
         timer = FindObjectOfType<Timer>();
         mic = FindObjectOfType<Microph>();
-        // objectGrabbable = FindObjectOfType<ObjectGrabbable>();
         client = FindObjectOfType<Client>();
         audioPlayback = FindObjectOfType<AudioPlayback>();
         runManager = FindObjectOfType<RunManager>();
@@ -88,11 +86,10 @@ public class EventManager : MonoBehaviour {
         }
     }
     
-    private void Drop() { // missing evaluation thingy here cause it was somewhere else
+    private void Drop() { 
         if (!runManager.getIntroductionMode()) {
             StopTimer();
         }
-        // does client post request somewhere else, BLOCK FOR INTRODUCTION
     }
     
     private void PickUp(GameObject obj){

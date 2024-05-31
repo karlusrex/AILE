@@ -14,12 +14,8 @@ public class FeedbackManager: MonoBehaviour{
     private AudioPlayback audioPlayback; 
     private EventManager eventManager; 
     private RunManager runManager;
-
     private double max; 
-
     public event System.Action<string> CorrectionInstructionRecieved;
-
-    private string uri = "http://127.0.0.1:5000/api/v1/";
 
     private void OnEnable()
     {

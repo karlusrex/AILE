@@ -6,63 +6,13 @@ using System.Text;
 using System;
 using Unity.VisualScripting;
 
-
-[System.Serializable]
-public class GameObjectData
-{
-    public string description; 
-    public Vector3 position;
-    public string material;
-}
-
-[System.Serializable]
-public class SerializableDictionary : ISerializationCallbackReceiver
-{
-    public Dictionary<string, GameObjectData> dict = new Dictionary<string, GameObjectData>(); //contains the data
-    [SerializeField] private List<string> keys = new List<string>(); //key in directory 
-    [SerializeField] private List<GameObjectData> values = new List<GameObjectData>(); //values in directory
-
-    /* 
-     * Prepares object for serializing by updating content
-     */
-    public void OnBeforeSerialize()
-    {
-        keys.Clear();
-        values.Clear();
-        foreach (var kvp in dict)
-        {
-            keys.Add(kvp.Key);
-            values.Add(kvp.Value);
-        }
-    }
-
-   
-    public void OnAfterDeserialize()
-    {
-        dict = new Dictionary<string, GameObjectData>();
-        for (int i = 0; i != Mathf.Min(keys.Count, values.Count); i++)
-            dict.Add(keys[i], values[i]);
-    }
-}
-
+/* Responsible for formatting context data */
 public class ContextAwareness : MonoBehaviour
 {
     GameObject player;
-
-    private string[] excludeTags = {"Untagged", "Respawn", "Finish", "EditorOnly", "MainCamera", "GameController", "Player", "Ball", "Cylinder"};
-    private List<string> gameTags = new List<string>();
-    private List<GameObject> tagged = new List<GameObject>();
-
     Dictionary<GameObject, List<GameObject>> gameobjectRelation = new Dictionary<GameObject, List<GameObject>>(); //maps gameobject to object below and above
-
     GameObject[] pickupable;
-
     GameObject[] interactable;
-
-    public GameObject below = null; 
-
-    bool objectRecieved = false; 
-
 
     void Start()
     {
@@ -152,9 +102,9 @@ public class ContextAwareness : MonoBehaviour
         //List relationships between objects 
         foreach(GameObject obj in gameobjectRelation.Keys){
             
-            List<GameObject> otherGameobjects = gameobjectRelation[obj]; //below, above
+            List<GameObject> otherGameobjects = gameobjectRelation[obj]; //below, above, in front, behind, right, left, enclosing
 
-            if ( obj.name != playerHoldingObject){ //don't document the players object
+            if ( obj.name != playerHoldingObject){ 
                 sb.AppendLine();
                 sb.Append(obj.name);
 
@@ -166,32 +116,32 @@ public class ContextAwareness : MonoBehaviour
                 
                 if (otherGameobjects[1] != null){
                     sb.Append(" and is directly beneath "); 
-                    sb.Append(otherGameobjects[1].name); //gameobject above
+                    sb.Append(otherGameobjects[1].name); //the gameobject above
                     sb.Append(".");
                 }
 
                 //Do we need this? 
                 if (otherGameobjects[2] != null){
                     sb.Append(" and is in front of "); 
-                    sb.Append(otherGameobjects[2].name); //gameobject above
+                    sb.Append(otherGameobjects[2].name); //the gameobject behind
                     sb.Append(".");
                 }
 
                 if (otherGameobjects[3] != null){
                     sb.Append(" and is behind "); 
-                    sb.Append(otherGameobjects[3].name); //gameobject above
+                    sb.Append(otherGameobjects[3].name); //the gameobject in front
                     sb.Append(".");
                 }
 
                 if (otherGameobjects[4] != null){
                     sb.Append(" and is to the left of "); 
-                    sb.Append(otherGameobjects[4].name); //gameobject above
+                    sb.Append(otherGameobjects[4].name); //the gameobject to the right
                     sb.Append(".");
                 }
 
                 if (otherGameobjects[5] != null){
                     sb.Append(" and is to the right of "); 
-                    sb.Append(otherGameobjects[5].name); //gameobject above
+                    sb.Append(otherGameobjects[5].name); //the gameobject to the left
                     sb.Append(".");
                 } 
 
@@ -204,44 +154,6 @@ public class ContextAwareness : MonoBehaviour
         }
         Debug.Log("[CONTEXT]: " + sb.ToString());
         return sb.ToString();
-    }
-
-    private string formatJSON(SerializableDictionary serializableDictionary)
-    {
-        System.Text.StringBuilder sb = new System.Text.StringBuilder(); //stringbuilder
-        sb.Append("{");
-
-        foreach (var k in serializableDictionary.dict)
-        {
-            string key = k.Key;
-            GameObjectData value = k.Value;
-
-            sb.Append("\"" + key + "\": {");
-            sb.Append("\"description\": \"" + value.description + "\", ");
-            sb.Append("\"position\": {");
-            sb.Append("\"x\": " + value.position.x + ", ");
-            sb.Append("\"y\": " + value.position.y + ", ");
-            sb.Append("\"z\": " + value.position.z + "}, ");
-            sb.Append("\"material\": \"" + value.material + "\"");
-            sb.Append("},"); //close object 
-        }
-
-        if (serializableDictionary.dict.Count > 0)
-        {
-            sb.Length--; 
-        }
-
-        sb.Append("}");
-
-        return sb.ToString(); 
-    }
-
-    void cleanUp()
-    {
-        gameTags.Clear();
-        tagged.Clear(); 
-        gameobjectRelation.Clear(); 
-        
     }
    
 }

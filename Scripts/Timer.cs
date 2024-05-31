@@ -43,7 +43,7 @@ public class Timer : MonoBehaviour
         }
     }
 
-    IEnumerator TimerCoroutine() //used to be static? 
+    IEnumerator TimerCoroutine() 
     {
         yield return new WaitForSeconds(30f); //30 sec
         Debug.Log("[Timer] No action taken in 30 seconds. Player needs support!");

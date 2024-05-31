@@ -14,32 +14,25 @@ using System.Text;
 public class PlayerPickUpDrop : MonoBehaviour
 {
     [SerializeField] private Transform playerCameraTransform;
-    [SerializeField] private LayerMask pickUpLM;
     [SerializeField] private Transform objectGrabPointTransform;
-
     public ObjectGrabbable objectGrabbable;
-
     private bool supportedMode; 
 
-    //Two objects to be selected
+    /* Two objects to be selected */
     private GameObject selectedPickUpObject; //can only be grabbable
     private GameObject targetObject; //can be either interacteble or grabbable - where select object is placed 
 
     private GameObject latestHitObject; //last object that was hit by raycast
     private GameObject priorSelectObject; //prior selected object - used if it needs to move to original position
     private Vector3 fromPos; //moved objects prior position 
-
     private Quaternion rotation; //moved objects prior rotation
-
     private EventManager eventManager; 
     private Client client;
     private RunManager runManager;
     private FeedbackManager feedbackManager; 
-   
     private GameObject[] pickupable;
     private GameObject[] interactable;
     private GameObject[] raycastAble; // merge into this thing
-
     private float pickupDistance = 5.0f;
     
 
@@ -95,7 +88,6 @@ public class PlayerPickUpDrop : MonoBehaviour
     }
 
     private void GrabObject(){
-        //Try to grab object 
         float pickUpDistance = 5f;
         float raycastRadius = 0.1f; 
 
@@ -104,8 +96,6 @@ public class PlayerPickUpDrop : MonoBehaviour
             if (raycastHit.transform.TryGetComponent(out objectGrabbable))
             {
                 objectGrabbable.Grab(objectGrabPointTransform);
-                // print min and second and millisecond
-                print("[INTERACTION] pickup time: " + DateTime.Now.ToString("HH:mm:ss:fff"));
             }
         } 
 
@@ -169,7 +159,7 @@ public class PlayerPickUpDrop : MonoBehaviour
 
     /*
     * Responsible for managing the glow of the object the player has selected. 
-    * Used by update. 
+    * Used by Update method. 
     */ 
     private void HandleGlow(){
         if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit hit, pickupDistance)) { //hit object

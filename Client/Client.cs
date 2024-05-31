@@ -112,19 +112,19 @@ public class Client : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
         WWWForm form = new WWWForm();
-        string optional_string; // occur 119, 247
+        string optional_string; 
         
         // set to empty string if null, else text
         if (text == null) { optional_string = "";} 
         else { optional_string = text; }
 
-        string image_words              = string.Join(", " , imageNames); // 381
-        string task_instruction         = task_instructions != null ? task_instructions[current_task_step] : ""; // 463
-        string task_instruction_all     = task_instructions != null ? string.Join(", " , task_instructions) : ""; // 464
-        string task_winning_condition   = winning_conditions != null ? winning_conditions[current_task_step] : ""; // 465
-        string virtual_context          = contextAwareness.getContext(); // 164, 294, 338
+        string image_words              = string.Join(", " , imageNames); 
+        string task_instruction         = task_instructions != null ? task_instructions[current_task_step] : ""; 
+        string task_instruction_all     = task_instructions != null ? string.Join(", " , task_instructions) : ""; 
+        string task_winning_condition   = winning_conditions != null ? winning_conditions[current_task_step] : ""; 
+        string virtual_context          = contextAwareness.getContext(); 
 
-        form.AddField("optional_string",        optional_string); // txt, 
+        form.AddField("optional_string",        optional_string); 
         form.AddField("image_words",            image_words);
         form.AddField("task_instruction",       task_instruction);
         form.AddField("task_instruction_all",   task_instruction_all);
@@ -174,12 +174,11 @@ public class Client : MonoBehaviour
     
     // ======================================== CALLBACKS ============================================ //
 
-    public string RecieveNextInstruction(){ // CHECK
+    public string RecieveNextInstruction(){ 
         if (current_task_step < task_instructions.Length - 1){ 
             return task_instructions[++current_task_step];
         } else {
-            PostRequest(url + "get-overall-task-goal", callback.OnLastEvaluation, null, null, false); // NEW
-            // GenerateOverallTaskGoal("http://127.0.0.1:5000/api/v1/get-overall-task-goal", OnLastEvaluation);
+            PostRequest(url + "get-overall-task-goal", callback.OnLastEvaluation, null, null, false); 
             return "I'm going to check if you have completed the task. Please wait a moment.";    
         }
     }

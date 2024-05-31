@@ -1,13 +1,9 @@
 import json
 import io
 from collections import deque
-
 import speech_recognition as sr # https://pypi.org/project/SpeechRecognition/
 from flask import Flask, request, send_file
 from gtts import gTTS
-
-# from assistant import Assistant
-# from new_assistant import Assistant
 from Assistant import Assistant
 
 app = Flask(__name__)
@@ -31,7 +27,7 @@ def text_to_speech():
     Makes a request to gTTS with provided string to recieve audiofile.
     Returns audiofile and stores it in project folder.
     """
-    data = request.form.get("optional_string") # NEW WAS txt
+    data = request.form.get("optional_string") 
     print("Text-To-Speech: ", data)
     tts = gTTS(data, lang='en', slow=False)
     
@@ -45,7 +41,7 @@ def get_instructions_from_ollama():
     Makes request to chatbot with provided winning condition and context data,
     returns the response as JSON. 
     """     
-    task_winning_condition = request.form.get("optional_string") # NEW WAS winning_condition
+    task_winning_condition = request.form.get("optional_string") 
     virtual_context = request.form.get("virtual_context")
     print("Get-Instructions-From-Ollama:")
     print("Task-Winning-Condition: ", task_winning_condition)
@@ -93,7 +89,7 @@ def get_task_helper_question():
     """
     global conversation
     global introduction
-    question = request.form.get("optional_string") #yes
+    question = request.form.get("optional_string") 
     print("QUESTION: ", question)
 
     if introduction:

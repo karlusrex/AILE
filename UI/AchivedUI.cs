@@ -11,22 +11,18 @@ public class AchivedUI : MonoBehaviour
     public Canvas canvas; 
     private GameObject imgObject; 
     public int imageSize; 
+    private static AchivedUI instance; // Static reference to the instance
 
-    // Static reference to the instance
-    private static AchivedUI instance;
-
-     // Property to access the instance from other scripts
+     /* Property to access the instance from other scripts */
     public static AchivedUI Instance
     {
         get
         {
-            // If the instance doesn't exist, find it in the scene
-            if (instance == null)
+            if (instance == null) // If the instance doesn't exist, find it in the scene
             {
                 instance = FindObjectOfType<AchivedUI>();
 
-                // If it still doesn't exist, create a new GameObject and add the script
-                if (instance == null)
+                if (instance == null)// If it still doesn't exist, create a new GameObject and add the script
                 {
                     GameObject singletonObject = new GameObject("Achived UI singleton");
                     instance = singletonObject.AddComponent<AchivedUI>();
@@ -51,7 +47,7 @@ public class AchivedUI : MonoBehaviour
             rectTransform.sizeDelta = new Vector2(imageSize, imageSize); // Adjust multiplier as needed
 
             // Calculate the position of the UI element relative to the object
-            Vector3 offset = new Vector3(0.1f, 0.2f, 0.0f); // Example offset to the right
+            Vector3 offset = new Vector3(0.1f, 0.2f, 0.0f); 
             Vector3 targetPosition = obj.transform.position + offset;
 
             // Set the position of the UI element

@@ -33,7 +33,6 @@ public class ObjectGrabbable : MonoBehaviour
                 float rotationSpeed = 100f; // Adjust this value to change the speed of rotation
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
             }
-            // wait for 100ms
             yield return new WaitForSeconds(0.03f);
         }
     }
@@ -53,24 +52,21 @@ public class ObjectGrabbable : MonoBehaviour
         this.objectGrabPointTransform = objectGrabPointTransform;
         objRigidbody.useGravity = false;
         objRigidbody.isKinematic = true;
-        // get box collider 
         BoxCollider boxCollider = GetComponent<BoxCollider>();
-        // get mesh collider
         MeshCollider meshCollider = GetComponent<MeshCollider>();
-        // if box collider is not null, disable it
-        if (boxCollider != null)
+        
+        if (boxCollider != null) // if box collider is not null, disable it
         {
             boxCollider.enabled = false;
         }
-        // if mesh collider is not null, disable it
-        if (meshCollider != null)
+        
+        if (meshCollider != null) // if mesh collider is not null, disable it
         {
             meshCollider.enabled = false;
         }
         
         currentlyHolding = true;
-        // Trigger the pick up event
-        OnObjectPickedUp?.Invoke(gameObject);
+        OnObjectPickedUp?.Invoke(gameObject); // Trigger the pick up event
     }
 
     public void GrabEasyMode(){ 
@@ -91,7 +87,7 @@ public class ObjectGrabbable : MonoBehaviour
     public void Drop()
     {
 
-        //Check if medium mode is activated 
+        /*Check if semi manual mode mode is activated*/
         RunManager runManager = FindObjectOfType<RunManager>(); 
 
         if (runManager.isSemiManualMode()){
@@ -103,7 +99,6 @@ public class ObjectGrabbable : MonoBehaviour
                 Collider targetCollider = closestObject.GetComponent<Collider>();
                 Vector3 targetColliderPos = targetCollider.bounds.center; 
                 Vector3 newPos = targetColliderPos + Vector3.up * (targetCollider.bounds.extents.y + gameObject.GetComponent<Collider>().bounds.extents.y + 0.05f); 
-                // get rigidbody
                 Rigidbody rb = gameObject.GetComponent<Rigidbody>();
                 rb.velocity = Vector3.zero; 
                 gameObject.transform.position = newPos;
@@ -115,17 +110,15 @@ public class ObjectGrabbable : MonoBehaviour
         objRigidbody.isKinematic = false;
         OnObjectDropped?.Invoke(); // Trigger the drop event
 
-        // get box collider
         BoxCollider boxCollider = GetComponent<BoxCollider>();
-        // get mesh collider
         MeshCollider meshCollider = GetComponent<MeshCollider>();
-        // if box collider is not null, enable it
-        if (boxCollider != null)
+        
+        if (boxCollider != null) // if box collider is not null, enable it
         {
             boxCollider.enabled = true;
         }
-        // if mesh collider is not null, enable it
-        if (meshCollider != null)
+        
+        if (meshCollider != null)// if mesh collider is not null, enable it
         {
             meshCollider.enabled = true;
         }
@@ -149,12 +142,12 @@ public class ObjectGrabbable : MonoBehaviour
         return OnTopOf; 
     }
 
-    // https://forum.unity.com/threads/how-to-find-the-nearest-object.360952/
+    // credit: https://forum.unity.com/threads/how-to-find-the-nearest-object.360952/
     public GameObject GetClosestObject()
     {
         PlayerPickUpDrop playerPickUpDrop = FindObjectOfType<PlayerPickUpDrop>();
         GameObject[] MyListOfObjects = playerPickUpDrop.GetRaycastable();
-        float closest = 0.5f; //add your max range here
+        float closest = 0.5f; //add max range here
         GameObject closestObject = null;
 
         for (int i = 0; i < MyListOfObjects.Length; i++)  //list of gameObjects to search through
