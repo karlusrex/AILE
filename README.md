@@ -86,3 +86,6 @@ Inspired by [InclusiveRenderScript](https://github.com/niklasenberg/InclusiveRen
 
 ### Object Tagging system
 Inspired by [InclusiveRenderScript](https://github.com/niklasenberg/InclusiveRenderScripts)
+
+### Get closest object
+Copied from [How to find the closest object](https://forum.unity.com/threads/how-to-find-the-nearest-object.360952/)
